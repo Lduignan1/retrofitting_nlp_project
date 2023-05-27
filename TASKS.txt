@@ -1,3 +1,6 @@
 19 May. Anatolii, Nazanin, Liam: be able to explain what the project is about.
 23 May. Anatolii, Nazanin: make a "skeleton" of the program, to_do steps, divide coding tasks.
         Liam: Theoretical background.
+        
+28 May. Anatolii, Nazanin: finish implementing functions that allow our retrofit program to run
+        Liam: Research theoretical background on distributional semantics, word2vec, semantic lexicons; evaluation metrics
