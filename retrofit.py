@@ -38,7 +38,7 @@ def read_word_vecs(filename):
 def print_word_vecs(wordVectors, outFileName):
   sys.stderr.write('\nWriting down the vectors in '+outFileName+'\n')
   outFile = open(outFileName, 'w')  
-  for word, values in wordVectors.iteritems():
+  for word, values in wordVectors.items():
     outFile.write(word+' ')
     for val in wordVectors[word]:
       outFile.write('%.4f' %(val)+' ')
@@ -49,7 +49,7 @@ def print_word_vecs(wordVectors, outFileName):
 def read_lexicon(filename):
   lexicon = {}
   for line in open(filename, 'r'):
-    words = line.lower().strip().split()
+    words = line.lower().strip().split(maxsplit=1)
     lexicon[norm_word(words[0])] = [norm_word(word) for word in words[1:]]
   return lexicon
 
