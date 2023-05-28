@@ -4,3 +4,6 @@
         
 28 May. Anatolii, Nazanin: finish implementing functions that allow our retrofit program to run
         Liam: Research theoretical background on distributional semantics, word2vec, semantic lexicons; evaluation metrics
+        
+29 May. Anatolii, Nazanin: figure out what's causing program to get generate a few erratic values; 
+        Liam: word similarity metric
