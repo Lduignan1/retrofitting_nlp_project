@@ -13,8 +13,8 @@
         - finish writing theoretical part (Liam)
         - slides for theoretical part (Liam)
         - python script for eval metrics
-        - write implementation part
-        - slides implementation part
+        - write implementation part (Nazanin)
+        - slides implementation part (Nazanin)
         - write about experiments/results
         - slides experiments/results
         - write user manual/README
