@@ -7,3 +7,15 @@
         
 29 May. Anatolii, Nazanin: figure out what's causing program to get generate a few erratic values; 
         Liam: word similarity metric
+
+30. May. Tasks left to do:
+        - implement word similarity metric (Liam)
+        - finish writing theoretical part (Liam)
+        - slides for theoretical part (Liam)
+        - python script for eval metrics
+        - write implementation part
+        - slides implementation part
+        - write about experiments/results
+        - slides experiments/results
+        - write user manual/README
+        - extracting data from PPDB/WN?
