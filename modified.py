@@ -62,8 +62,7 @@ def read_lexicon(filename):
 
 # modified
 def retrofit(wordVecs, lexicon, numIters, alpha=1, beta=1):
-  vocab = set(wordVecs.keys())
-    
+
   # The retrofitted vectors are initialized to be equal to the original vectors
   retrofittedVecs = deepcopy(wordVecs)
 
@@ -79,7 +78,7 @@ def retrofit(wordVecs, lexicon, numIters, alpha=1, beta=1):
         beta = 1 / numNeighbors
 
         # update (beta * numNeighbors will always be 1)
-        retrofittedVecs[word] = np.sum([beta * retrofittedVecs[neighbor] for neighbor in neighbors]) +  alpha * retrofittedVecs[word] / (beta * numNeighbors + alpha)
+        retrofittedVecs[word] = sum([beta * retrofittedVecs[neighbor] for neighbor in neighbors]) +  alpha * wordVecs[word] / (beta * numNeighbors + alpha)
     
     return retrofittedVecs
 
