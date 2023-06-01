@@ -13,12 +13,13 @@ with open(sys.argv[1], 'r') as file1, open(sys.argv[2], 'r') as file2:
             same = False
             num_dif +=1
             # print the first line that includes a difference
-            print(f"Difference found at line {line_number}:\n")
+            # print(f"Difference found at line {line_number}:\n")
             for i, (val1, val2) in enumerate(zip(line1.rstrip().split(), line2.rstrip().split())):
                 if val1 != val2:
-                    print(f"index: {i}")
-                    print(f"File 1: {val1}")
-                    print(f"File 2: {val2}\n")
+                    # # print the values for inspection
+                    # print(f"index: {i}")
+                    # print(f"File 1: {val1}")
+                    # print(f"File 2: {val2}\n")
 
                     # trying to see which words are not being retrofitted well
                     if abs(float(val1) - float(val2)) > 0.0002:
