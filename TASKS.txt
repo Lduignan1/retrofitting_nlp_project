@@ -9,7 +9,7 @@
         Liam: word similarity metric
 
 30. May. Tasks left to do:
-        - implement word similarity metric (Liam)
+        - implement word similarity metric (Liam) - todo: French data
         - finish writing theoretical part (Liam)
         - slides for theoretical part (Liam)
         - python script for eval metrics
@@ -18,4 +18,4 @@
         - write about experiments/results
         - slides experiments/results
         - write user manual/README
-        - extracting data from PPDB/WN?
+        - extracting data from PPDB/WN - NLTK for WN, some other package for PPDB?
