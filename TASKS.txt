@@ -19,3 +19,12 @@
         - slides experiments/results
         - write user manual/README
         - extracting data from PPDB/WN - NLTK for WN, some other package for PPDB?
+        
+        
+1 June. Update
+        - General algorithm and eval metrics mostly finished
+        - make sure our code is as original-looking as possible; no re-used comments or variable names
+        - need to figure out how to manually extract data from semantic lexicons - do we keep or remove read_lexicon funct?
+        - see new outline and suggestions from Bingzhi
+        - perhaps a little script to run and output scores on either SA or WS (or maybe just the notebooks are fine)
+        - would be nice to retrofit some french embeddings i think with FreNetic (not a priority)
