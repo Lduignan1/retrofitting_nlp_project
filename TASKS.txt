@@ -23,7 +23,7 @@
         
 1 June. Update
         - General algorithm and eval metrics mostly finished
-        - make sure our code is as original-looking as possible; no re-used comments or variable names
+        - make sure our code is as original-looking as possible; no re-used comments or variable names (Nazanin)
         - need to figure out how to manually extract data from semantic lexicons - do we keep or remove read_lexicon funct?
         - see new outline and suggestions from Bingzhi
         - perhaps a little script to run and output scores on either SA or WS (or maybe just the notebooks are fine)
