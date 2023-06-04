@@ -88,9 +88,11 @@ def retrofit(embeddings, lexicon, numIters, alpha=1, beta=1):
         # update step
         # (beta * numNeighbors will always be 1)
         # return a default value of 0.0 if a key is not found
-        retrofittedEmbeds[word] = (sum(
-          [beta * retrofittedEmbeds.get(neighbor.casefold(), 0.0) for neighbor in neighbors]) + alpha * embeddings.get(word.casefold(), 0.0)) / (
-          beta * numNeighbors + alpha)
+        # retrofittedEmbeds[word] = (sum(
+        #   [beta * retrofittedEmbeds.get(neighbor.casefold(), 0.0) for neighbor in neighbors]) + alpha * embeddings.get(word.casefold(), 0.0)) / (
+        #   beta * numNeighbors + alpha)
+
+        retrofittedEmbeds[word] = (sum([beta * retrofittedEmbeds[neighbor] for neighbor in neighbors]) +  alpha * embeddings[word]) / (beta * numNeighbors + alpha)
     
   return retrofittedEmbeds
 
