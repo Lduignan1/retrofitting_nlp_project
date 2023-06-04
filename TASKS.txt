@@ -1,11 +1,11 @@
-19 May. Anatolii, Nazanin, Liam: be able to explain what the project is about.
-23 May. Anatolii, Nazanin: make a "skeleton" of the program, to_do steps, divide coding tasks.
+19 May. Nazanin, Liam: be able to explain what the project is about.
+23 May. Nazanin: make a "skeleton" of the program, to_do steps, divide coding tasks.
         Liam: Theoretical background.
         
-28 May. Anatolii, Nazanin: finish implementing functions that allow our retrofit program to run
+28 May. Nazanin: finish implementing functions that allow our retrofit program to run
         Liam: Research theoretical background on distributional semantics, word2vec, semantic lexicons; evaluation metrics
         
-29 May. Anatolii, Nazanin: figure out what's causing program to get generate a few erratic values; 
+29 May. Liam: figure out what's causing program to generate a few erratic values; 
         Liam: word similarity metric
 
 30. May. Tasks left to do:
@@ -13,17 +13,18 @@
         - finish writing theoretical part (Liam)
         - slides for theoretical part (Liam)
         - python script for eval metrics
-        - write implementation part (Nazanin)
+        - write implementation part (Nazanin) - Done
         - slides implementation part (Nazanin)
         - write about experiments/results
         - slides experiments/results
         - write user manual/README
-        - extracting data from PPDB/WN - NLTK for WN, some other package for PPDB?
+        - extracting data from WN using NLTK (Nazanin) - In progress
+        - extracting data from PPDB - package for PPDB?
         
         
 1 June. Update
         - General algorithm and eval metrics mostly finished
-        - make sure our code is as original-looking as possible; no re-used comments or variable names (Nazanin)
+        - make sure our code is as original-looking as possible; no re-used comments or variable names (Nazanin) - Done?
         - need to figure out how to manually extract data from semantic lexicons - do we keep or remove read_lexicon funct?
         - see new outline and suggestions from Bingzhi
         - perhaps a little script to run and output scores on either SA or WS (or maybe just the notebooks are fine)
