@@ -2,6 +2,7 @@ import string
 import gzip
 import numpy as np
 import sys
+import os
 
 from copy import deepcopy
 
@@ -20,6 +21,7 @@ def normalize(word):
 
 ''' Read and normalize the embeddings '''
 def read_embeddings(filename):
+  print("\nReading embeddings...")
   # keys: words (string)
   # values: normalized vectors (NumPy array)
   embeds = {} 
@@ -34,6 +36,7 @@ def read_embeddings(filename):
       norm = np.linalg.norm(vector)
       embeds[word] = vector / norm  
   
+  print("Reading embeddings done!")
   return embeds
 
   
@@ -53,17 +56,21 @@ def read_lexicon(filename):
 
 ''' Write retrofitted embeddings to specified file '''
 def write_retrofitted_embeddings(embeddings, filename):
+  print(f"\nWriting embeddings to {filename}")
+  
   with open(filename, 'w') as file:
     for word, vector in embeddings.items():
         file.write(f"{word} ")
         np.savetxt(file, vector[np.newaxis], delimiter=' ', fmt='%.4f')    
+  
+  print("Writing embeddings done!\n")
 
 
 ''' Retrofit embeddings '''
-def retrofit(pretrainedEmbeds, lexicon, numIters, alpha=1, beta=1):
+def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
 
   # The retrofitted vectors are initialized to be equal to the original vectors
-  retrofittedEmbeds = deepcopy(pretrainedEmbeds)
+  retrofittedEmbeds = deepcopy(originalEmbeds)
   
   # creating a separate set to store the lowercase versions of the keys (words) in retrofittedEmbeds 
   # this allows us to perform case-insensitive key comparison while retaining the original case of the words
@@ -88,7 +95,7 @@ def retrofit(pretrainedEmbeds, lexicon, numIters, alpha=1, beta=1):
         # (beta * numNeighbors will always be 1)
         # return a default value of 0.0 if a key is not found
         retrofittedEmbeds[word] = (sum(
-          [beta * retrofittedEmbeds.get(neighbor.casefold(), 0.0) for neighbor in neighbors]) + alpha * pretrainedEmbeds.get(word.casefold(), 0.0)) / (
+          [beta * retrofittedEmbeds.get(neighbor.casefold(), 0.0) for neighbor in neighbors]) + alpha * originalEmbeds.get(word.casefold(), 0.0)) / (
           beta * numNeighbors + alpha)
     
   return retrofittedEmbeds
@@ -98,13 +105,37 @@ def retrofit(pretrainedEmbeds, lexicon, numIters, alpha=1, beta=1):
 
 if __name__=='__main__':
 
-  # ISSUE: should still check for the correct order of the arguments
+  '''Check for correct number of arguments'''
   if len(sys.argv) != 5:
-    sys.exit("Usage: python modified.py input lexicon numiter output")
+    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\n")
+  
 
-  embeddings = read_embeddings(sys.argv[1]) # input
+  '''Check for correct order of arguments'''
+  # inFile
+  if not (sys.argv[1].endswith('.gz') or sys.argv[1].endswith('.txt')):
+    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\ninFile should be a .gz or .txt file.\n")
+  
+  # lexicon
+  if not (os.path.isfile(sys.argv[2]) or sys.argv[2].endswith('.txt')):
+    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\nlexicon should be a .txt file.\n")
+
+  # numIter
+  if not sys.argv[3].isdigit():
+    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\nnumIter should be a positive integer.\n")
+
+  # outFile
+  outDir = os.path.dirname(sys.argv[4])
+  if outDir != '' and not os.path.isdir(outDir):
+    sys.exit(f"Error: Output directory '{outDir}' does not exist.")
+
+  if not sys.argv[4].endswith('.txt'):
+    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\noutFile should be a .txt file.\n")
+  
+
+  '''if all the checks pass, proceed'''
+  embeddings = read_embeddings(sys.argv[1]) # inFile
   lexicon = read_lexicon(sys.argv[2])       # lexicon
-  numIter = int(sys.argv[3])                # numiter
-  outFileName = sys.argv[4]                 # output
+  numIter = int(sys.argv[3])                # numIter
+  outFileName = sys.argv[4]                 # outFile
   
   write_retrofitted_embeddings(retrofit(embeddings, lexicon, numIter), outFileName) 
