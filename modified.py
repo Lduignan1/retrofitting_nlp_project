@@ -14,6 +14,9 @@ def normalize(word):
   # punctuations are replaced with '*PUNC*'
   elif word in string.punctuation:
     return '*PUNC*'
+  # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
+  elif any(char not in string.ascii_letters for char in word):
+    return '*SYMBOL*'
   # all other words are returned intact
   else:
     return word 
@@ -26,7 +29,8 @@ def read_embeddings(filename):
   # values: normalized vectors (NumPy array)
   embeds = {} 
   
-  with (gzip.open(filename, 'rt') if filename.endswith('.gz') else open(filename, 'r')) as file:
+  # using encoding='utf-8' to avoid UnicodeEncodeError on some systems
+  with (gzip.open(filename, 'rt', encoding='utf-8') if filename.endswith('.gz') else open(filename, 'r', encoding='utf-8')) as file:
     for line in file:
       elements = line.strip().split()
       word = elements[0]
@@ -46,7 +50,7 @@ def read_lexicon(filename):
   # values: all the other words in the line (list of strings)
   lexicon = {}  
   
-  with open(filename, 'r') as file:
+  with open(filename, 'r', encoding='utf-8') as file:
     for line in file:
       words = line.strip().split() 
       lexicon[normalize(words[0])] = [normalize(word) for word in words[1:]] 
@@ -58,7 +62,7 @@ def read_lexicon(filename):
 def write_retrofitted_embeddings(embeddings, filename):
   print(f"\nWriting embeddings to {filename}")
   
-  with open(filename, 'w') as file:
+  with open(filename, 'w', encoding='utf-8') as file:
     for word, vector in embeddings.items():
         file.write(f"{word} ")
         np.savetxt(file, vector[np.newaxis], delimiter=' ', fmt='%.4f')    
@@ -94,8 +98,12 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
         # update step
         # (beta * numNeighbors will always be 1)
         # return a default value of 0.0 if a key is not found
+        # retrofittedEmbeds[word] = (sum(
+        #   [beta * retrofittedEmbeds.get(neighbor.casefold(), 0.0) for neighbor in neighbors]) + alpha * originalEmbeds.get(word.casefold(), 0.0)) / (
+        #   beta * numNeighbors + alpha)
+
         retrofittedEmbeds[word] = (sum(
-          [beta * retrofittedEmbeds.get(neighbor.casefold(), 0.0) for neighbor in neighbors]) + alpha * originalEmbeds.get(word.casefold(), 0.0)) / (
+          [beta * retrofittedEmbeds[neighbor.casefold()] for neighbor in neighbors]) + alpha * originalEmbeds[word.casefold()]) / (
           beta * numNeighbors + alpha)
     
   return retrofittedEmbeds
@@ -126,7 +134,7 @@ if __name__=='__main__':
   # outFile
   outDir = os.path.dirname(sys.argv[4])
   if outDir != '' and not os.path.isdir(outDir):
-    sys.exit(f"Error: Output directory '{outDir}' does not exist.")
+    sys.exit(f"\nError: Output directory '{outDir}' does not exist.\n")
 
   if not sys.argv[4].endswith('.txt'):
     sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\noutFile should be a .txt file.\n")
