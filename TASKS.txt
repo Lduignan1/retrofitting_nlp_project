@@ -9,17 +9,16 @@
         Liam: word similarity metric
 
 30. May. Tasks left to do:
-        - implement word similarity metric (Liam) - todo: French data
-        - finish writing theoretical part (Liam)
+        - implement word similarity metric (Liam) - done
+        - finish writing theoretical part (Liam) - in progress
         - slides for theoretical part (Liam)
-        - python script for eval metrics
         - write implementation part (Nazanin) - Done
         - slides implementation part (Nazanin)
         - write about experiments/results
         - slides experiments/results
         - write user manual/README
         - extracting data from WN using NLTK (Nazanin) - In progress
-        - extracting data from PPDB - package for PPDB?
+        - extracting data from PPDB - done
         
         
 1 June. Update
@@ -29,3 +28,9 @@
         - see new outline and suggestions from Bingzhi
         - perhaps a little script to run and output scores on either SA or WS (or maybe just the notebooks are fine)
         - would be nice to retrofit some french embeddings i think with FreNetic (not a priority)
+        
+5 June. Update
+        - ppdb extraction implemented but slightly lower word similarity score vs original embeddings; i think this is because we can only download ppdb 2.0 whereas the one in faruqui's original repo is ppdb 1.0
+        - take a look at the read_ppdb and decide how you want to deal with lexicon choice at runtime
+        - i'm not sure if its worth writing a script to show the evaluation scores; maybe just the notebooks are fine
+        - still need to look at french data; i will do that tomorrow
