@@ -73,7 +73,7 @@ def read_ppdb(filename):
             # filter out stop words
             if line[2].strip() not in stop_words: 
             # strip() to remove spaces before and after words
-              lexicon[normalize(line[1].strip())].add(normalize(line[2].strip()))
+              lexicon[(line[1].strip())].add((line[2].strip()))
             
     return lexicon
 

@@ -19,8 +19,8 @@ def norm_word(word):
 ''' Read all the word vectors and normalize them '''
 def read_word_vecs(filename):
   wordVectors = {}
-  if filename.endswith('.gz'): fileObject = gzip.open(filename, 'r')
-  else: fileObject = open(filename, 'r')
+  if filename.endswith('.gz'): fileObject = gzip.open(filename, 'r', encoding='utf-8')
+  else: fileObject = open(filename, 'r', encoding='utf-8')
   
   for line in fileObject:
     line = line.strip().lower()
@@ -37,8 +37,8 @@ def read_word_vecs(filename):
 ''' Write word vectors to file '''
 def print_word_vecs(wordVectors, outFileName):
   sys.stderr.write('\nWriting down the vectors in '+outFileName+'\n')
-  outFile = open(outFileName, 'w')  
-  for word, values in wordVectors.iteritems():
+  outFile = open(outFileName, 'w', encoding='utf-8')  
+  for word, values in wordVectors.items():
     outFile.write(word+' ')
     for val in wordVectors[word]:
       outFile.write('%.4f' %(val)+' ')
@@ -48,7 +48,7 @@ def print_word_vecs(wordVectors, outFileName):
 ''' Read the PPDB word relations as a dictionary '''
 def read_lexicon(filename):
   lexicon = {}
-  for line in open(filename, 'r'):
+  for line in open(filename, 'r', encoding='utf-8'):
     words = line.lower().strip().split()
     lexicon[norm_word(words[0])] = [norm_word(word) for word in words[1:]]
   return lexicon
