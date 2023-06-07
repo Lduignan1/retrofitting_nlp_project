@@ -1,26 +1,10 @@
-import string
 import gzip
 import numpy as np
 import sys
 import os
+from lexicon import Lexicon # needs to be mentioned in the report
 
 from copy import deepcopy
-from collections import defaultdict
-from nltk.corpus import stopwords
-
-def normalize(word):
-  # words containing digits are replaced with '*NUM*'
-  if any(char.isdigit() for char in word):
-    return '*NUM*'
-  # punctuations are replaced with '*PUNC*'
-  elif word in string.punctuation:
-    return '*PUNC*'
-  # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
-  elif any(char not in string.ascii_letters for char in word):
-    return '*SYMBOL*'
-  # all other words are returned intact
-  else:
-    return word 
 
 
 ''' Read and normalize the embeddings '''
@@ -43,39 +27,6 @@ def read_embeddings(filename):
   
   print("Reading embeddings done!")
   return embeds
-
-  
-''' Read the lexicon as a dictionary '''
-def read_lexicon(filename):
-  # keys: 1st word of each line (string)
-  # values: all the other words in the line (list of strings)
-  lexicon = {}  
-  
-  with open(filename, 'r', encoding='utf-8') as file:
-    for line in file:
-      words = line.strip().split() 
-      lexicon[normalize(words[0])] = [normalize(word) for word in words[1:]] 
-  
-  return lexicon    
-
-stop_words = set(stopwords.words('english'))
-def read_ppdb(filename):
-    """read a file containing the paraphrase database and return a dictionary
-    input: file or path
-    output: dict with phrase terms as keys and paraphrases as values
-    """
-    lexicon = defaultdict(set)
-    
-    with open(filename, 'r', encoding='utf-8') as file:
-        for line in file:
-            line = line.split('|||')
-            
-            # filter out stop words
-            if line[2].strip() not in stop_words: 
-            # strip() to remove spaces before and after words
-              lexicon[normalize(line[1].strip())].add(normalize(line[2].strip()))
-            
-    return lexicon
 
 
 ''' Write retrofitted embeddings to specified file '''
@@ -138,15 +89,16 @@ if __name__=='__main__':
     sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\n")
   
 
-  '''Check for correct order of arguments'''
+  '''Check for correct order and format of arguments'''
   # inFile
   if not (sys.argv[1].endswith('.gz') or sys.argv[1].endswith('.txt')):
     sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\ninFile should be a .gz or .txt file.\n")
   
   # lexicon
-  # if not (os.path.isfile(sys.argv[2]) or sys.argv[2].endswith('.txt')):
-  #   sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\nlexicon should be a .txt file.\n")
-
+  lex = sys.argv[2].lower()
+  if not (lex in ['wn', 'wn+', 'wordnet', 'wordnet+'] or lex == 'ppdb'):
+    sys.exit(
+      "\nUsage: python modified.py inFile lexicon numIter outFile\nPossible lexicons: PPDB or WordNet(WN) or WordNet+(WN+) (case insensitive)\n")
 
   # numIter
   if not sys.argv[3].isdigit():
@@ -161,16 +113,18 @@ if __name__=='__main__':
     sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\noutFile should be a .txt file.\n")
   
 
-# maybe here can add an argument that determines which lexicon to use
-# if lex == ppdb:
-#   lexicon = read_ppdb(...)
-# else:
-#   lexicon = read_wn(...)
-
   '''if all the checks pass, proceed'''
   embeddings = read_embeddings(sys.argv[1]) # inFile
-  lexicon = read_ppdb(sys.argv[2])      # lexicon
   numIter = int(sys.argv[3])                # numIter
   outFileName = sys.argv[4]                 # outFile
+  
+  # lexicon
+  lexicon = Lexicon()                       
+  if lex == 'ppdb':
+    lexicon = lexicon.read_ppdb('lexicons/ppdb-2.0-xl-lexical')
+  elif lex in ['wn', 'wordnet']:
+    lexicon = lexicon.wn_synonyms()
+  else:
+    lexicon = lexicon.wn_all_relations()
   
   write_retrofitted_embeddings(retrofit(embeddings, lexicon, numIter), outFileName) 
