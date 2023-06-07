@@ -10,12 +10,12 @@
 
 30. May. Tasks left to do:
         - implement word similarity metric (Liam) - done
-        - finish writing theoretical part (Liam) - in progress
+        - finish writing theoretical part (Liam) - done
         - slides for theoretical part (Liam)
         - write implementation part (Nazanin) - Done
         - slides implementation part (Nazanin)
-        - write about experiments/results
-        - slides experiments/results
+        - write about experiments/results (Liam) - In progress
+        - slides experiments/results (Liam)
         - write user manual/README
         - extracting data from WN using NLTK (Nazanin) - In progress
         - extracting data from PPDB - done
