@@ -16,8 +16,8 @@
         - slides implementation part (Nazanin)
         - write about experiments/results (Liam) - In progress
         - slides experiments/results (Liam)
-        - write user manual/README
-        - extracting data from WN using NLTK (Nazanin) - In progress
+        - write user manual/README (Nazanin)
+        - extracting data from WN using NLTK (Nazanin) - Done
         - extracting data from PPDB - done
         
         
@@ -34,3 +34,15 @@
         - take a look at the read_ppdb and decide how you want to deal with lexicon choice at runtime
         - i'm not sure if its worth writing a script to show the evaluation scores; maybe just the notebooks are fine
         - still need to look at french data; i will do that tomorrow
+        
+7 June. Update
+        - update implementation part (Nazanin)
+        - write user manual/README (Nazanin)
+        - write about experiments/results (Liam) - In progress
+        - retrofit some french embeddings
+        - review code and report for consistency and finalize project (Nazanin, Liam)
+        
+        - slides for theoretical part (Liam)
+        - slides implementation part (Nazanin)
+        - slides experiments/results (Liam)
+        
