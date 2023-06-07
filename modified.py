@@ -6,6 +6,7 @@ import os
 
 from copy import deepcopy
 from collections import defaultdict
+from nltk.corpus import stopwords
 
 def normalize(word):
   # words containing digits are replaced with '*NUM*'
@@ -57,6 +58,7 @@ def read_lexicon(filename):
   
   return lexicon    
 
+stop_words = set(stopwords.words('english'))
 def read_ppdb(filename):
     """read a file containing the paraphrase database and return a dictionary
     input: file or path
@@ -68,8 +70,10 @@ def read_ppdb(filename):
         for line in file:
             line = line.split('|||')
             
+            # filter out stop words
+            if line[2].strip() not in stop_words: 
             # strip() to remove spaces before and after words
-            lexicon[normalize(line[1].strip())].add(normalize(line[2].strip()))
+              lexicon[normalize(line[1].strip())].add(normalize(line[2].strip()))
             
     return lexicon
 
@@ -140,8 +144,9 @@ if __name__=='__main__':
     sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\ninFile should be a .gz or .txt file.\n")
   
   # lexicon
-  if not (os.path.isfile(sys.argv[2]) or sys.argv[2].endswith('.txt')):
-    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\nlexicon should be a .txt file.\n")
+  # if not (os.path.isfile(sys.argv[2]) or sys.argv[2].endswith('.txt')):
+  #   sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\nlexicon should be a .txt file.\n")
+
 
   # numIter
   if not sys.argv[3].isdigit():
