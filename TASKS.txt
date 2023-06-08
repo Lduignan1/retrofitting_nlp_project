@@ -47,3 +47,8 @@
         - slides implementation part (Nazanin)
         - slides experiments/results (Liam)
         
+June 8. 
+I just saw in the notes I had taken from the first meeting:
+- test different values for alpha and beta
+- Stopping criteria: when Euclidian distance is smaller than 0.01 (criteria of the paper) We need to define our own stopping criteria
+(What are your thoughts on this? Should we do it ir just leave it?)
