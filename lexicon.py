@@ -40,6 +40,9 @@ class Lexicon:
     ''' get synonymy relations (public method)'''
     def wn_synonyms(self):
         for word in self._get_all_words():
+            # normalize word
+            word = normalize(word)
+
             # add a new key for the current word in the self.wn_syn dictionary
             self.wn_syn[word] = []
 
@@ -47,14 +50,14 @@ class Lexicon:
             for syn in synsets:
                 for lemma in syn.lemmas():
                     if lemma.name() != word and lemma.name() not in self.wn_syn[word]: 
-                        self.wn_syn[word].append(lemma.name())
+                        self.wn_syn[word].append(normalize(lemma.name()))
         
         return self.wn_syn
 
 
     ''' get the synonymy, hypernymy and hyponymy relations of word (public method)'''
     def wn_all_relations(self):
-        # initialize the wn.all dictionary with all the words and a list of their synonyms
+        # create a copy of the synonym relations dictionary
         synonyms = self.wn_synonyms()
         self.wn_all = synonyms.copy()
         
@@ -66,12 +69,12 @@ class Lexicon:
                 for hypernym in synset.hypernyms():
                     for lemma in hypernym.lemmas():
                         if lemma.name() != word and lemma.name() not in self.wn_all[word]:
-                            self.wn_all[word].append(lemma.name())
+                            self.wn_all[word].append(normalize(lemma.name()))
                 # add hyponyms
                 for hyponym in synset.hyponyms():
                     for lemma in hyponym.lemmas():
                         if lemma.name() != word and lemma.name() not in self.wn_all[word]:
-                            self.wn_all[word].append(lemma.name())
+                            self.wn_all[word].append(normalize(lemma.name()))
         
         return self.wn_all
 
@@ -94,18 +97,17 @@ class Lexicon:
         return self.ppdb
     
 
-'''
+
 ### Checks ###
 
-lexicon = Lexicon()
+# lexicon = Lexicon()
 
-# PPDB 
-print(f"PPDB relations: \n{lexicon.read_ppdb('lexicons/ppdb-2.0-xl-lexical')}")
+# # PPDB 
+# print(f"PPDB relations: \n{lexicon.read_ppdb('lexicons/ppdb-2.0-xl-lexical')}")
 
-# WordNet synonyms
-print(f"\nWordNet synonyms: \n{lexicon.wn_synonyms()}")
+# # WordNet synonyms
+# print(f"\nWordNet synonyms: \n{lexicon.wn_synonyms()}")
 
-# WordNet all_relations
-print(f"\nWordNet synonyms, hypernyms & hyponyms: \n{lexicon.wn_all_relations()}\n")
+# # WordNet all_relations
+# print(f"\nWordNet synonyms, hypernyms & hyponyms: \n{lexicon.wn_all_relations()}\n")
 
-'''
