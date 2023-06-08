@@ -92,39 +92,45 @@ if __name__=='__main__':
   '''Check for correct order and format of arguments'''
   # inFile
   if not (sys.argv[1].endswith('.gz') or sys.argv[1].endswith('.txt')):
-    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\ninFile should be a .gz or .txt file.\n")
+    sys.exit("\nUsage: python modified.py inFile lang lexicon numIter outFile\ninFile should be a .gz or .txt file.\n")
   
+  # language
+  language = sys.argv[2].lower()
+  if not (language in ['eng', 'fra']):
+    sys.exit(
+      "\nUsage: python modified.py inFile lang lexicon numIter outFile\nPossible languages: eng or fra (case insensitive)\n")
+
   # lexicon
-  lex = sys.argv[2].lower()
+  lex = sys.argv[3].lower()
   if not (lex in ['wn', 'wn+', 'wordnet', 'wordnet+'] or lex == 'ppdb'):
     sys.exit(
-      "\nUsage: python modified.py inFile lexicon numIter outFile\nPossible lexicons: PPDB or WordNet(WN) or WordNet+(WN+) (case insensitive)\n")
+      "\nUsage: python modified.py inFile lang lexicon numIter outFile\nPossible lexicons: PPDB or WordNet(WN) or WordNet+(WN+) (case insensitive)\n")
 
   # numIter
-  if not sys.argv[3].isdigit():
-    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\nnumIter should be a positive integer.\n")
+  if not sys.argv[4].isdigit():
+    sys.exit("\nUsage: python modified.py inFile lang lexicon numIter outFile\nnumIter should be a positive integer.\n")
 
   # outFile
-  outDir = os.path.dirname(sys.argv[4])
+  outDir = os.path.dirname(sys.argv[5])
   if outDir != '' and not os.path.isdir(outDir):
     sys.exit(f"\nError: Output directory '{outDir}' does not exist.\n")
 
-  if not sys.argv[4].endswith('.txt'):
+  if not sys.argv[5].endswith('.txt'):
     sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\noutFile should be a .txt file.\n")
   
 
   '''if all the checks pass, proceed'''
   embeddings = read_embeddings(sys.argv[1]) # inFile
-  numIter = int(sys.argv[3])                # numIter
-  outFileName = sys.argv[4]                 # outFile
+  numIter = int(sys.argv[4])                # numIter
+  outFileName = sys.argv[5]                 # outFile
   
   # lexicon
-  lexicon = Lexicon()                       
-  if lex == 'ppdb':
+  lexicon = Lexicon(lang=language)                       
+  if lex == 'ppdb' and language == 'eng':
     lexicon = lexicon.read_ppdb('lexicons/ppdb-2.0-xl-lexical')
   elif lex in ['wn', 'wordnet']:
     lexicon = lexicon.wn_synonyms()
-  else:
+  elif lex in ['wn+', 'wordnet+']:
     lexicon = lexicon.wn_all_relations()
   
   write_retrofitted_embeddings(retrofit(embeddings, lexicon, numIter), outFileName) 
