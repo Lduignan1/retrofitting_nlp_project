@@ -36,7 +36,7 @@
         - still need to look at french data; i will do that tomorrow
         
 7 June. Update
-        - update implementation part (Nazanin)
+        - update implementation part (Nazanin) - In progress
         - write user manual/README (Nazanin)
         - write about experiments/results (Liam) - In progress
         - retrofit some french embeddings (Liam) - In progress
