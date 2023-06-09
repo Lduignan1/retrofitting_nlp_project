@@ -49,21 +49,24 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
   
   # creating a separate set to store the lowercase versions of the keys (words) in retrofittedEmbeds 
   # this allows us to perform case-insensitive key comparison while retaining the original case of the words
-  embedKeys = {key.lower() for key in retrofittedEmbeds.keys()}
+  # Liam: remove lower()
+  embedKeys = {key for key in retrofittedEmbeds.keys()}
 
   for _ in range(numIters):
     for word in lexicon:
       # we only care about words that are both in the lexicon and in the embeddings
-      if word.lower() in embedKeys:
+      # liam: remove lower()
+      if word in embedKeys:
         
+        #liam: remove lower()
         # neighbors is a list of all the words that are similar to the current word (based on the given lexicon)
-        neighbors = [neighbor for neighbor in lexicon[word] if neighbor.lower() in embedKeys]
+        neighbors = [neighbor for neighbor in lexicon[word] if neighbor in embedKeys]
         
         numNeighbors = len(neighbors)
                 
         if numNeighbors == 0:
           continue
-                
+        
         beta = 1 / numNeighbors
 
         # update step
@@ -73,8 +76,9 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
         #   [beta * retrofittedEmbeds.get(neighbor.casefold(), 0.0) for neighbor in neighbors]) + alpha * originalEmbeds.get(word.casefold(), 0.0)) / (
         #   beta * numNeighbors + alpha)
 
+        ## liam: without casefold()
         retrofittedEmbeds[word] = (sum(
-          [beta * retrofittedEmbeds[neighbor.casefold()] for neighbor in neighbors]) + alpha * originalEmbeds[word.casefold()]) / (
+          [beta * retrofittedEmbeds[neighbor] for neighbor in neighbors]) + alpha * originalEmbeds[word]) / (
           beta * numNeighbors + alpha)
     
   return retrofittedEmbeds
@@ -85,14 +89,14 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
 if __name__=='__main__':
 
   '''Check for correct number of arguments'''
-  if len(sys.argv) != 5:
-    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\n")
+  if len(sys.argv) != 6:
+    sys.exit("\nUsage: python modified.py inFile lang lexicon numIter outFile\n")
   
 
   '''Check for correct order and format of arguments'''
   # inFile
-  if not (sys.argv[1].endswith('.gz') or sys.argv[1].endswith('.txt')):
-    sys.exit("\nUsage: python modified.py inFile lang lexicon numIter outFile\ninFile should be a .gz or .txt file.\n")
+  # if not (sys.argv[1].endswith('.gz') or sys.argv[1].endswith('.txt')):
+  #   sys.exit("\nUsage: python modified.py inFile lang lexicon numIter outFile\ninFile should be a .gz or .txt file.\n")
   
   # language
   language = sys.argv[2].lower()
@@ -116,7 +120,7 @@ if __name__=='__main__':
     sys.exit(f"\nError: Output directory '{outDir}' does not exist.\n")
 
   if not sys.argv[5].endswith('.txt'):
-    sys.exit("\nUsage: python modified.py inFile lexicon numIter outFile\noutFile should be a .txt file.\n")
+    sys.exit("\nUsage: python modified.py inFile lang lexicon numIter outFile\noutFile should be a .txt file.\n")
   
 
   '''if all the checks pass, proceed'''
@@ -126,8 +130,8 @@ if __name__=='__main__':
   
   # lexicon
   lexicon = Lexicon(lang=language)                       
-  if lex == 'ppdb' and language == 'eng':
-    lexicon = lexicon.read_ppdb('lexicons/ppdb-2.0-xl-lexical')
+  if lex == 'ppdb':
+    lexicon = lexicon.read_ppdb()
   elif lex in ['wn', 'wordnet']:
     lexicon = lexicon.wn_synonyms()
   elif lex in ['wn+', 'wordnet+']:

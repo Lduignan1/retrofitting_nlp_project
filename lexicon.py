@@ -26,6 +26,8 @@ class Lexicon:
         self.ppdb = defaultdict(set)    # is defaultdict better than normal dict? Why?
         self.lang = lang
 
+        
+
     ''' WORDNET '''
 
     ''' populate self.words with all the unique words in the WordNet library (internal method)'''
@@ -80,14 +82,19 @@ class Lexicon:
 
     ''' PPDB (public method)'''
     
-    def read_ppdb(self, filename):
-        """
+    def read_ppdb(self):
+        '''
         read a file containing the paraphrase database and return a dictionary
         input: file or path
         output: dict with phrase terms as keys and paraphrases as values
-        """
-    
-        with open(filename, 'r', encoding='utf-8') as file:
+        '''
+        if self.lang == 'eng':
+            ppdb_file = 'lexicons/ppdb-2.0-xl-lexical'
+
+        else:
+            ppdb_file = 'lexicons/ppdb-1.0-xl-lexical'
+            
+        with open(ppdb_file, 'r', encoding='utf-8') as file:
             for line in file:
                 line = line.split('|||')
             
