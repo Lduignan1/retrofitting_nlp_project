@@ -39,7 +39,7 @@
         - update implementation part (Nazanin) - In progress
         - write user manual/README (Nazanin)
         - write about experiments/results (Liam) - In progress
-        - retrofit some french embeddings (Liam) - In progress
+        - retrofit some french embeddings (Liam) - Done
         - review code and report for consistency and finalize project (Nazanin, Liam)
         
         ** to be done after report + code handed in
