@@ -52,3 +52,11 @@ I just saw in the notes I had taken from the first meeting:
 - test different values for alpha and beta
 - Stopping criteria: when Euclidian distance is smaller than 0.01 (criteria of the paper) We need to define our own stopping criteria
 (What are your thoughts on this? Should we do it ir just leave it?)
+
+10 June Update
+        - French embeddings successfully retrofitted with French ppdb 1.0 and wordnet
+        - new 'lang' argument when executing program; 'eng' or 'fra'
+        - removed check if embeddings file ends in .txt or .gz; french embeddings come in a generic file with no extension
+        - got rid of all parts of retrofit function that make words lowercase; many French words in embeddings file are uppercase and this was resulting in key                 errors
+        - results for English and French in Google doc and notebooks
+        - was thinking about testing diff values for alpha, beta and num_iter but the original authors don't; claim best results when alpha = 1, beta =                         1/num_neighbors and num_iter = 10 but i will see if i have time
