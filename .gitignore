@@ -5,3 +5,9 @@ misc
 french_tweets.csv
 french_tweets_train.txt
 french_tweets_test.txt
+
+french_movie_reviews_test.csv
+french_movie_reviews_test.txt
+french_movie_reviews_train.csv
+french_movie_reviews_train.txt
+french_movie_reviews_valid.csv
