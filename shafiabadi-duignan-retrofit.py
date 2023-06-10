@@ -43,6 +43,7 @@ def write_retrofitted_embeddings(embeddings, filename):
 
 ''' Retrofit embeddings '''
 def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
+  print("\nRetrofitting word embeddings...")
 
   # The retrofitted vectors are initialized to be equal to the original vectors
   retrofittedEmbeds = deepcopy(originalEmbeds)
@@ -71,16 +72,12 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
 
         # update step
         # (beta * numNeighbors will always be 1)
-        # return a default value of 0.0 if a key is not found
-        # retrofittedEmbeds[word] = (sum(
-        #   [beta * retrofittedEmbeds.get(neighbor.casefold(), 0.0) for neighbor in neighbors]) + alpha * originalEmbeds.get(word.casefold(), 0.0)) / (
-        #   beta * numNeighbors + alpha)
-
         ## liam: without casefold()
         retrofittedEmbeds[word] = (sum(
           [beta * retrofittedEmbeds[neighbor] for neighbor in neighbors]) + alpha * originalEmbeds[word]) / (
           beta * numNeighbors + alpha)
-    
+
+  print("Retrofitting done!")  
   return retrofittedEmbeds
 
 
@@ -95,8 +92,7 @@ if __name__=='__main__':
 
   '''Check for correct order and format of arguments'''
   # inFile
-  # if not (sys.argv[1].endswith('.gz') or sys.argv[1].endswith('.txt')):
-  #   sys.exit("\nUsage: python modified.py inFile lang lexicon numIter outFile\ninFile should be a .gz or .txt file.\n")
+  # we should still check that the first argument being passed in is the embeddings file
   
   # language
   language = sys.argv[2].lower()

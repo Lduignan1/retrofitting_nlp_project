@@ -1,5 +1,7 @@
 embeddings
 lexicons
+/lexicons/
+datasets
 misc
 
 french_tweets.csv
