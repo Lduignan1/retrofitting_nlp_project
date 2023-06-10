@@ -1,7 +1,23 @@
 import string
+import unicodedata as ud    # needs to be mentioned in report
 from nltk.corpus import wordnet as wn
 from collections import defaultdict
 
+
+# def normalize(word):
+#     # words containing digits are replaced with '*NUM*'
+#     if any(char.isdigit() for char in word):
+#         return '*NUM*'
+#     # punctuations are replaced with '*PUNC*'
+#     elif word in string.punctuation:
+#         return '*PUNC*'
+#     # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
+#     elif any(char not in string.ascii_letters for char in word):
+#         return '*SYMBOL*'
+#     # all other words are returned intact
+#     else:
+#         return word 
+    
 
 def normalize(word):
     # words containing digits are replaced with '*NUM*'
@@ -11,11 +27,11 @@ def normalize(word):
     elif word in string.punctuation:
         return '*PUNC*'
     # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
-    elif any(char not in string.ascii_letters for char in word):
+    elif any(ud.category(char) not in ['Ll', 'Lu'] for char in word):
         return '*SYMBOL*'
     # all other words are returned intact
     else:
-        return word 
+        return word
   
 
 class Lexicon:
