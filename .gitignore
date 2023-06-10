@@ -1,3 +1,7 @@
 embeddings
 lexicons
 misc
+
+french_tweets.csv
+french_tweets_train.txt
+french_tweets_test.txt
