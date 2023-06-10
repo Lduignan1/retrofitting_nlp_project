@@ -4,44 +4,36 @@ from collections import defaultdict
 
 
 def normalize(word):
-  # words containing digits are replaced with '*NUM*'
-  if any(char.isdigit() for char in word):
-    return '*NUM*'
-  # punctuations are replaced with '*PUNC*'
-  elif word in string.punctuation:
-    return '*PUNC*'
-  # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
-  elif any(char not in string.ascii_letters for char in word):
-    return '*SYMBOL*'
-  # all other words are returned intact
-  else:
-    return word 
+    # words containing digits are replaced with '*NUM*'
+    if any(char.isdigit() for char in word):
+        return '*NUM*'
+    # punctuations are replaced with '*PUNC*'
+    elif word in string.punctuation:
+        return '*PUNC*'
+    # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
+    elif any(char not in string.ascii_letters for char in word):
+        return '*SYMBOL*'
+    # all other words are returned intact
+    else:
+        return word 
   
 
 class Lexicon:
     def __init__(self, lang='eng'):
-        self.words = set()
         self.wn_syn = {}
         self.wn_all = {}
         self.ppdb = defaultdict(set)    # is defaultdict better than normal dict? Why?
         self.lang = lang
-
         
 
     ''' WORDNET '''
 
-    ''' populate self.words with all the unique words in the WordNet library (internal method)'''
-    def _get_all_words(self):
-        if self.lang == 'eng':
-            self.words.update(wn.all_lemma_names())
-        else:
-            self.words.update(wn.all_lemma_names(lang=self.lang))
-        return self.words
-
-
-    ''' get synonymy relations (public method)'''
+    ''' get synonymy relations '''
     def wn_synonyms(self):
-        for word in self._get_all_words():
+        # get all the unique words in the WordNet library for the specified language
+        words = set(wn.all_lemma_names(lang=self.lang))
+        
+        for word in words:
             # normalize word
             word = normalize(word)
 
@@ -57,13 +49,13 @@ class Lexicon:
         return self.wn_syn
 
 
-    ''' get the synonymy, hypernymy and hyponymy relations of word (public method)'''
+    ''' get the synonymy, hypernymy and hyponymy relations of word '''
     def wn_all_relations(self):
         # create a copy of the synonym relations dictionary
         synonyms = self.wn_synonyms()
         self.wn_all = synonyms.copy()
         
-        # add hypernymy and hyponymy relations
+        # add hypernymy and hyponymy relations to it
         for word in self.wn_all:
             synsets = wn.synsets(word, lang=self.lang)
             for synset in synsets:
@@ -80,7 +72,8 @@ class Lexicon:
         
         return self.wn_all
 
-    ''' PPDB (public method)'''
+
+    ''' PPDB '''
     
     def read_ppdb(self):
         '''
@@ -103,18 +96,3 @@ class Lexicon:
             
         return self.ppdb
     
-
-
-### Checks ###
-
-# lexicon = Lexicon()
-
-# # PPDB 
-# print(f"PPDB relations: \n{lexicon.read_ppdb('lexicons/ppdb-2.0-xl-lexical')}")
-
-# # WordNet synonyms
-# print(f"\nWordNet synonyms: \n{lexicon.wn_synonyms()}")
-
-# # WordNet all_relations
-# print(f"\nWordNet synonyms, hypernyms & hyponyms: \n{lexicon.wn_all_relations()}\n")
-
