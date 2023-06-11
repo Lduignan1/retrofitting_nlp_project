@@ -87,7 +87,7 @@ if __name__=='__main__':
 
   '''Check for correct number of arguments'''
   if len(sys.argv) != 6:
-    sys.exit("\npython shafiabadi-duignan-retrofit.py <language> <lexicon> <iterations> <output_file_path>\n")
+    sys.exit("\npython shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>\n")
   
 
   '''Check for correct order and format of arguments'''
@@ -98,16 +98,16 @@ if __name__=='__main__':
   language = sys.argv[2].lower()
   if not (language in ['eng', 'fra']):
     sys.exit(
-      "\nUsage: python shafiabadi-duignan-retrofit.py <language> <lexicon> <iterations> <output_file_path>\nPossible languages: eng or fra (case insensitive)\n")
+      "\nUsage: python shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>\nPossible languages: eng or fra (case insensitive)\n")
 
   # lexicon
   lex = sys.argv[3].lower()
   if not (lex in ['wn', 'wn+', 'wordnet', 'wordnet+'] or lex == 'ppdb'):
-    sys.exit("\nUsage: python shafiabadi-duignan-retrofit.py <language> <lexicon> <iterations> <output_file_path>\nPossible lexicons: PPDB or WordNet(WN) or WordNet+(WN+) (case insensitive)\n")
+    sys.exit("\nUsage: python shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>\nPossible lexicons: PPDB or WordNet(WN) or WordNet+(WN+) (case insensitive)\n")
 
   # numIter
   if not sys.argv[4].isdigit():
-    sys.exit("\nUsage: python shafiabadi-duignan-retrofit.py <language> <lexicon> <iterations> <output_file_path>\nIterations should be a positive integer.\n")
+    sys.exit("\nUsage: python shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>\nIterations should be a positive integer.\n")
 
   # outFile
   outDir = os.path.dirname(sys.argv[5])
@@ -115,7 +115,7 @@ if __name__=='__main__':
     sys.exit(f"\nError: Output directory '{outDir}' does not exist.\n")
 
   if not sys.argv[5].endswith('.txt'):
-    sys.exit("\nUsage: python shafiabadi-duignan-retrofit.py <language> <lexicon> <iterations> <output_file_path>\nOutput file should be a .txt file.\n")
+    sys.exit("\nUsage: python shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>\nOutput file should be a .txt file.\n")
   
 
   '''if all the checks pass, proceed'''
