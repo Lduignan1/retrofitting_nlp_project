@@ -4,21 +4,6 @@ from nltk.corpus import wordnet as wn
 from collections import defaultdict
 
 
-# def normalize(word):
-#     # words containing digits are replaced with '*NUM*'
-#     if any(char.isdigit() for char in word):
-#         return '*NUM*'
-#     # punctuations are replaced with '*PUNC*'
-#     elif word in string.punctuation:
-#         return '*PUNC*'
-#     # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
-#     elif any(char not in string.ascii_letters for char in word):
-#         return '*SYMBOL*'
-#     # all other words are returned intact
-#     else:
-#         return word 
-    
-
 def normalize(word):
     # words containing digits are replaced with '*NUM*'
     if any(char.isdigit() for char in word):
@@ -27,11 +12,13 @@ def normalize(word):
     elif word in string.punctuation:
         return '*PUNC*'
     # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
+    # elif any(char not in string.ascii_letters for char in word):
+    #     return '*SYMBOL*'
     elif any(ud.category(char) not in ['Ll', 'Lu'] for char in word):
         return '*SYMBOL*'
     # all other words are returned intact
     else:
-        return word
+        return word 
   
 
 class Lexicon:
@@ -40,6 +27,7 @@ class Lexicon:
         self.wn_all = {}
         self.ppdb = defaultdict(set)    # is defaultdict better than normal dict? Why?
         self.lang = lang
+        self.synsets = defaultdict(list)
         
 
     ''' WORDNET '''
@@ -56,8 +44,10 @@ class Lexicon:
             # add a new key for the current word in the self.wn_syn dictionary
             self.wn_syn[word] = []
 
-            synsets = wn.synsets(word, lang=self.lang)
-            for syn in synsets:
+            # storing synsets for each word in the self.synsets dictionary to avoid redundent calls to wn.synsets() later on
+            self.synsets[word] = wn.synsets(word, lang=self.lang)
+            
+            for syn in self.synsets[word]:
                 for lemma in syn.lemmas():
                     if lemma.name() != word and lemma.name() not in self.wn_syn[word]: 
                         self.wn_syn[word].append(normalize(lemma.name()))
@@ -73,8 +63,7 @@ class Lexicon:
         
         # add hypernymy and hyponymy relations to it
         for word in self.wn_all:
-            synsets = wn.synsets(word, lang=self.lang)
-            for synset in synsets:
+            for synset in self.synsets[word]:
                 # add hypernyms
                 for hypernym in synset.hypernyms():
                     for lemma in hypernym.lemmas():
