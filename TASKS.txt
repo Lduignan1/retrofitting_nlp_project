@@ -70,3 +70,4 @@ I just saw in the notes I had taken from the first meeting:
 11 June Update
         - fininshed updating the Implementation section of the report (hopefully for the last time)
         - updated lexicon.py to make the computations more efficient
+        - completed the README.md (not sure how I'm supposed to bring this in the report)
