@@ -36,8 +36,8 @@
         - still need to look at french data; i will do that tomorrow
         
 7 June. Update
-        - update implementation part (Nazanin) - In progress
-        - write user manual/README (Nazanin)
+        - update implementation part (Nazanin) - Done
+        - write user manual/README (Nazanin) - In progress
         - write about experiments/results (Liam) - In progress
         - retrofit some french embeddings (Liam) - Done
         - review code and report for consistency and finalize project (Nazanin, Liam)
@@ -60,8 +60,13 @@ I just saw in the notes I had taken from the first meeting:
         - got rid of all parts of retrofit function that make words lowercase; many French words in embeddings file are uppercase and this was resulting in key                 errors
         - results for English and French in Google doc and notebooks
         - was thinking about testing diff values for alpha, beta and num_iter but the original authors don't; claim best results when alpha = 1, beta =                         1/num_neighbors and num_iter = 10 but i will see if i have time
-
+          
+          (Nazanin)
         - modified the normalize function in lexicon.py to also be able to capture French letters. 
           But in order to check it myself I would need to dl a lot of French datasets including the French movie reviews. 
           So if it's alright, I'll leave it to you to check if performance increases.
           Maybe this could also be related to why you were getting KeyErrors on the French datasets?
+          
+11 June Update
+        - fininshed updating the Implementation section of the report (hopefully for the last time)
+        - updated lexicon.py to make the computations more efficient
