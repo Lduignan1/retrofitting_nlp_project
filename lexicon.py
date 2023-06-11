@@ -57,8 +57,14 @@ class Lexicon:
 
     ''' get the synonymy, hypernymy and hyponymy relations of word '''
     def wn_all_relations(self):
+        # retrieve synonymy relations
+        if self.wn_syn == {}:
+            synonyms = self.wn_synonyms()
+        else:
+            # avoiding unnecessary duplicate computations if wn_synonyms() has already been called before
+            synonyms = self.wn_syn
+
         # create a copy of the synonym relations dictionary
-        synonyms = self.wn_synonyms()
         self.wn_all = synonyms.copy()
         
         # add hypernymy and hyponymy relations to it
