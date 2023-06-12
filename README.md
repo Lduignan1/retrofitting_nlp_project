@@ -11,10 +11,10 @@ The Word Embedding Retrofitting Program is a comprehensive tool based on the alg
 
 ## Features
 
-Support for English and French languages
-Possibility to select the lexicon database between WordNet and PPDB
-Customizable number of iterations for retrofitting
-Output saved to a specified file for further analysis
+- Support for English and French languages
+- Possibility to select the lexicon database between WordNet and PPDB
+- Customizable number of iterations for retrofitting
+- Output saved to a specified file for further analysis
 
 ## Requirements
 
