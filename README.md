@@ -87,9 +87,11 @@ Example:
 
 ## Reference
 
+```
 @InProceedings{faruqui:2015:NAACL,
   author    = {Faruqui, Manaal and Dodge, Jesse and Jauhar, Sujay K.  and  Dyer, Chris and Hovy, Eduard and Smith, Noah A.},
   title     = {Retrofitting Word Vectors to Semantic Lexicons},
   booktitle = {Proceedings of NAACL},
   year      = {2015},
 }
+```
