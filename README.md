@@ -34,8 +34,10 @@ pip install nltk
 
 3. Download the WordNet resources by running the following Python script:
 
-```import nltk
-nltk.download('wordnet')```
+```
+import nltk
+nltk.download('wordnet')
+```
 
 4. Download the PPDB resources by visiting the PPDB website (http://paraphrase.org/#/download) and following the instructions for downloading the appropriate version for your language.
 
