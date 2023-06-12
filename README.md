@@ -18,11 +18,11 @@ The Word Embedding Retrofitting Program is a comprehensive tool based on the alg
 
 ## Requirements
 
-Python 3.6 or above
-NLTK (Natural Language Toolkit) library
-WordNet database (included in NLTK)
-PPDB database (available for download separately)
-Operating System: Windows, macOS, or Linux
+- Python 3.6 or above
+- NLTK (Natural Language Toolkit) library
+- WordNet database (included in NLTK)
+- PPDB database (available for download separately)
+- Operating System: Windows, macOS, or Linux
 
 ## Installation 
 
