@@ -49,9 +49,9 @@ nltk.download('wordnet')
 
 ## Data you need
 
-Word vector file
+- Word vector file (either in .gz, .txt or generic file format)
 (should have one word per line followed by its vector representation (space delimited))
-
+- PPDB file (if using PPDB) available here: http://paraphrase.org/#/download (XL size recommended)
 ## Usage
 
 The Word Embedding Retrofitting Program consists of two main files: 
