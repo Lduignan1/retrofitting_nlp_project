@@ -49,7 +49,7 @@ nltk.download('wordnet')
 
 ## Data you need
 
-- Word vector file (either in .gz, .txt or generic file format)
+- Word embeddings file either in .gz, .txt or generic file format
 (should have one word per line followed by its vector representation (space delimited))
 
 ## Usage
