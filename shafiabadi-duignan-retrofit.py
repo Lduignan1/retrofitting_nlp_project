@@ -21,7 +21,7 @@ def read_embeddings(filename):
       word = elements[0]
       vector = np.array([float(value) for value in elements[1:]], dtype=float)
         
-      # normalize vector (Euclidean norm)
+      # normalize vector (vector / Euclidean norm)
       norm = np.linalg.norm(vector)
       embeds[word] = vector / norm  
   
@@ -50,13 +50,11 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
   
   # creating a separate set to store the lowercase versions of the keys (words) in retrofittedEmbeds 
   # this allows us to perform case-insensitive key comparison while retaining the original case of the words
-  # Liam: remove lower()
   embedKeys = {key for key in retrofittedEmbeds.keys()}
 
   for _ in range(numIters):
     for word in lexicon:
       # we only care about words that are both in the lexicon and in the embeddings
-      # liam: remove lower()
       if word in embedKeys:
         
         #liam: remove lower()
@@ -72,7 +70,6 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
 
         # update step
         # (beta * numNeighbors will always be 1)
-        ## liam: without casefold()
         retrofittedEmbeds[word] = (sum(
           [beta * retrofittedEmbeds[neighbor] for neighbor in neighbors]) + alpha * originalEmbeds[word]) / (
           beta * numNeighbors + alpha)
