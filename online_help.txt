@@ -1,0 +1,46 @@
+# Online Help
+
+## Usage Syntax:
+python shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>
+
+## Required Arguments:
+- <embeddings_file_path>: Path to the pre-trained word embeddings file you wish to retrofit.
+- <language>: Specify "eng" for English or "fra" for French.
+- <lexicon>: Specify the lexicon database:
+    - 'wordnet' or 'wn': Retrieves synonymy relations from the WordNet database.
+    - 'wordnet+' or 'wn+': Retrieves synonymy, hypernymy, and hyponymy relations from WordNet.
+    - 'ppdb': Retrieves paraphrase relations from the Paraphrase Database.
+- <iterations>: Number of retrofitting iterations (usually n = 10).
+- <output_file_path>: File to save the retrofitted embeddings for further analysis.
+
+## Requirements:
+- Python 3.6 or above installed on your system.
+- NLTK (Natural Language Toolkit) library.
+- WordNet database (included in NLTK).
+- PPDB database (available for download separately).
+- Operating System: Windows, macOS, or Linux.
+
+## Installation Instructions:
+1. Ensure Python 3.6 or above is installed. Visit https://www.python.org for instructions.
+2. Install the NLTK library by executing the command: pip install nltk
+3. Download WordNet resources by running the following Python script:
+   import nltk
+   nltk.download('wordnet')
+4. Download the PPDB resources from http://paraphrase.org/#/download and follow the instructions.
+5. Clone or download the Word Embedding Retrofitting Program repository from GitHub.
+6. Place the PPDB resources in the designated directory within the program repository.
+
+## Example Usage:
+- Retrofit English word embeddings using WordNet:
+  python shafiabadi-duignan-retrofit.py sample_eng_vec.txt eng wn 10 retrofitted_vec.txt
+
+- Retrofit French word embeddings using PPDB:
+  python shafiabadi-duignan-retrofit.py sample_fr_vec.txt fra ppdb 10 retrofitted_vec.txt
+
+## Additional Notes:
+- The program supports English and French languages.
+- You can customize the number of iterations for retrofitting.
+- The retrofitted embeddings will be saved to the specified output file for further analysis.
+
+For more information and detailed instructions, please refer to the User Manual section of the report.
+

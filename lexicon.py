@@ -1,5 +1,5 @@
 import string
-import unicodedata as ud    # needs to be mentioned in report
+import unicodedata as ud   
 from nltk.corpus import wordnet as wn
 from collections import defaultdict
 
@@ -12,8 +12,6 @@ def normalize(word):
     elif word in string.punctuation:
         return '*PUNC*'
     # words containing symbols other than alphabetical characters, digits or punctuation marks are replaced with '*SYMBOL*'
-    # elif any(char not in string.ascii_letters for char in word):
-    #     return '*SYMBOL*'
     elif any(ud.category(char) not in ['Ll', 'Lu'] for char in word):
         return '*SYMBOL*'
     # all other words are returned intact
@@ -25,7 +23,7 @@ class Lexicon:
     def __init__(self, lang='eng'):
         self.wn_syn = {}
         self.wn_all = {}
-        self.ppdb = defaultdict(set)    # is defaultdict better than normal dict? Why?
+        self.ppdb = defaultdict(set)   
         self.lang = lang
         self.synsets = defaultdict(list)
         

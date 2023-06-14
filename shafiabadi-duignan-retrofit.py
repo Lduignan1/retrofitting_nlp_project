@@ -2,7 +2,7 @@ import gzip
 import numpy as np
 import sys
 import os
-from lexicon import Lexicon # needs to be mentioned in the report
+from lexicon import Lexicon
 
 from copy import deepcopy
 
@@ -57,7 +57,6 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
       # we only care about words that are both in the lexicon and in the embeddings
       if word in embedKeys:
         
-        #liam: remove lower()
         # neighbors is a list of all the words that are similar to the current word (based on the given lexicon)
         neighbors = [neighbor for neighbor in lexicon[word] if neighbor in embedKeys]
         
@@ -80,16 +79,34 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
 
 #########################################################################################################################################
 
+''' Display the online help '''
+def display_help():
+    with open('online_help.txt', 'r') as file:
+        help_content = file.read()
+        print(help_content)
+
+
 if __name__=='__main__':
 
   '''Check for correct number of arguments'''
+  
+  if len(sys.argv) == 2:
+    # Check if the help option is provided
+    if '--help' in sys.argv or '-h' in sys.argv:
+        display_help()
+        sys.exit()
+    else:
+      print("\nUsage: python shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>")
+      print("\nTo access the online help: python shafiabadi-duignan-retrofit.py --help\n")
+      sys.exit(1)
+  
   if len(sys.argv) != 6:
-    sys.exit("\npython shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>\n")
+    print("\nUsage: python shafiabadi-duignan-retrofit.py <embeddings_file_path> <language> <lexicon> <iterations> <output_file_path>")
+    print("\nTo access the online help: python shafiabadi-duignan-retrofit.py --help\n")
+    sys.exit(1)
   
 
   '''Check for correct order and format of arguments'''
-  # inFile
-  # we should still check that the first argument being passed in is the embeddings file
   
   # language
   language = sys.argv[2].lower()
