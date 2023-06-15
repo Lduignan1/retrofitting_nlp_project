@@ -47,18 +47,14 @@ def retrofit(originalEmbeds, lexicon, numIters, alpha=1, beta=1):
 
   # The retrofitted vectors are initialized to be equal to the original vectors
   retrofittedEmbeds = deepcopy(originalEmbeds)
-  
-  # creating a separate set to store the lowercase versions of the keys (words) in retrofittedEmbeds 
-  # this allows us to perform case-insensitive key comparison while retaining the original case of the words
-  embedKeys = {key for key in retrofittedEmbeds.keys()}
 
   for _ in range(numIters):
     for word in lexicon:
       # we only care about words that are both in the lexicon and in the embeddings
-      if word in embedKeys:
+      if word in retrofittedEmbeds:
         
         # neighbors is a list of all the words that are similar to the current word (based on the given lexicon)
-        neighbors = [neighbor for neighbor in lexicon[word] if neighbor in embedKeys]
+        neighbors = [neighbor for neighbor in lexicon[word] if neighbor in retrofittedEmbeds]
         
         numNeighbors = len(neighbors)
                 
